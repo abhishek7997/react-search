@@ -14,6 +14,7 @@ export default function CountrySelect() {
     useContext(TextFieldContext)
 
   function handleChange(e) {
+    window.scrollTo(0, 0)
     setPageNumber(1)
     setSearch(e.target.value)
   }

@@ -3,15 +3,6 @@ import axios from "axios"
 
 const url = `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}`
 
-export const fetchData = async (search, pageNumber) => {
-  let newurl = url
-  if (search) newurl = `${url}&q=${search}&page=${pageNumber}`
-  return fetch(newurl)
-    .then((res) => res.json())
-    .then((data) => data)
-    .catch((err) => console.log("Fetcherr", err))
-}
-
 export default function useImageSearch(query, pageNumber) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
@@ -36,9 +27,9 @@ export default function useImageSearch(query, pageNumber) {
     })
       .then((res) => {
         setPhotos((prevPhotos) => {
-          return [...prevPhotos, ...res.data.hits]
+          return [...new Set([...prevPhotos, ...res.data.hits])]
         })
-        setHasMore(res.data.totalHits > 0)
+        setHasMore(res.data.totalHits > photos.length)
         setLoading(false)
         console.log(res.data)
       })
