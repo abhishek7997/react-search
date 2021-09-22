@@ -51,6 +51,8 @@ const ModalImage = (props) => {
 }
 
 const Photo = (props) => {
+  const { lastImageElementRef } = useContext(PhotosContext)
+
   if (!props.photos) {
     return null
   }
@@ -61,15 +63,29 @@ const Photo = (props) => {
 
   const items = props.photos.map(
     (photo, idx) => {
-      return (
-        <ImageListItem key={photo.id}>
-          <img
-            src={photo.webformatURL}
-            loading="lazy"
-            onClick={(e) => handleClick(e)}
-          />
-        </ImageListItem>
-      )
+      if (props.photos.length === idx + 1) {
+        return (
+          <ImageListItem key={photo.id} ref={lastImageElementRef}>
+            <img
+              src={photo.webformatURL}
+              loading="lazy"
+              onClick={(e) => handleClick(e)}
+            />
+            <ModalImage previewURL={photo.previewURL} />
+          </ImageListItem>
+        )
+      } else {
+        return (
+          <ImageListItem key={photo.id}>
+            <img
+              src={photo.webformatURL}
+              loading="lazy"
+              onClick={(e) => handleClick(e)}
+            />
+            <ModalImage previewURL={photo.previewURL} />
+          </ImageListItem>
+        )
+      }
     }
     // <div key={photo.id} className={classes.image}>
     //   <img src={photo.previewURL}></img>

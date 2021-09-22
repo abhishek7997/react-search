@@ -7,13 +7,14 @@ import TextField from "@mui/material/TextField"
 const TextFieldStyle = { backgroundColor: "white", width: "32rem" }
 
 export default function CountrySelect() {
+  // this is for storing previous search strings
   const [queries, setQueries] = useState([])
 
   let { photos, setPhotos, search, setSearch, pageNumber, setPageNumber } =
     useContext(TextFieldContext)
 
   function handleChange(e) {
-    if (pageNumber !== 1) setPageNumber(1)
+    setPageNumber(1)
     setSearch(e.target.value)
   }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react"
 import { CssBaseline, AppBar, Typography, Toolbar } from "@mui/material"
 import CountrySelect from "./components/SearchBox"
 import PhotosGrid from "./components/PhotosGrid"
-import { fetchData } from "./utils/GetImages"
+import useImageSearch, { fetchData } from "./utils/GetImages"
 
 export const PhotosContext = React.createContext()
 export const TextFieldContext = React.createContext()
@@ -47,36 +47,54 @@ function TopHeader() {
 }
 
 export default function CenteredTextAppBar() {
-  const [photos, setPhotos] = useState([])
+  // const [photos, setPhotos] = useState([])
+
   const [search, setSearch] = useState("")
   const [pageNumber, setPageNumber] = useState(1)
+  const { photos, hasMore, loading, error } = useImageSearch(search, pageNumber)
 
-  useEffect(async () => {
-    const items = await fetchData(search, pageNumber)
-    setPhotos((prevItems) => {
-      if (!prevItems) return [...prevItems, ...items.hits]
-      return [...items.hits]
-    })
-    // console.log(items)
-  }, [])
+  const observer = useRef()
+  const lastImageElementRef = useCallback(
+    (node) => {
+      if (loading) return
+      if (observer.current) observer.current.disconnect()
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1)
+        }
+      })
+      if (node) observer.current.observe(node)
+      console.log(node)
+    },
+    [loading, hasMore]
+  )
 
-  useEffect(async () => {
-    // setPageNumber(1)
-    const items = await fetchData(search, pageNumber)
-    // setHasMore(items.totalHits > pageNumber)
-    setPhotos((prevItems) => {
-      if (!prevItems) return [...prevItems, ...items.hits]
-      return [...items.hits]
-    })
-  }, [search, pageNumber])
+  // useEffect(async () => {
+  //   const items = await fetchData(search, pageNumber)
+  //   setPhotos((prevItems) => {
+  //     if (!prevItems) return [...prevItems, ...items.hits]
+  //     return [...items.hits]
+  //   })
+  //   // console.log(items)
+  // }, [])
+
+  // useEffect(async () => {
+  //   // setPageNumber(1)
+  //   const items = await fetchData(search, pageNumber)
+  //   // setHasMore(items.totalHits > pageNumber)
+  //   setPhotos((prevItems) => {
+  //     if (!prevItems) return [...prevItems, ...items.hits]
+  //     return [...items.hits]
+  //   })
+  // }, [search, pageNumber])
 
   return (
     <>
-      <PhotosContext.Provider value={{ photos }}>
+      <PhotosContext.Provider value={{ photos, lastImageElementRef }}>
         <TextFieldContext.Provider
           value={{
             photos,
-            setPhotos,
+            // setPhotos,
             search,
             setSearch,
             pageNumber,
@@ -86,6 +104,8 @@ export default function CenteredTextAppBar() {
           <CssBaseline />
           <TopHeader />
           <PhotosGrid />
+          <div>{loading && "Loading..."}</div>
+          <div>{error && "Error!!"}</div>
         </TextFieldContext.Provider>
       </PhotosContext.Provider>
     </>
