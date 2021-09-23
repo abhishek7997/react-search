@@ -26,15 +26,7 @@ const AppBarStyles = {
 function TopHeader() {
   return (
     <>
-      <AppBar position="static" sx={AppBarStyles.appbar}>
-        <Toolbar sx={AppBarStyles.toolbar}>
-          <Typography variant="h6" sx={AppBarStyles.title}>
-            Search Photos
-          </Typography>
-          <CountrySelect />
-        </Toolbar>
-      </AppBar>
-      <AppBar position="fixed" sx={AppBarStyles.appbar}>
+      <AppBar position="sticky" sx={AppBarStyles.appbar}>
         <Toolbar sx={AppBarStyles.toolbar}>
           <Typography variant="h6" sx={AppBarStyles.title}>
             Search Photos
