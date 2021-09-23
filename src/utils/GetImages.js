@@ -13,8 +13,6 @@ export default function useImageSearch(query, pageNumber) {
     setPhotos([])
   }, [query])
 
-  //let newurl = url
-  //if (query) newurl = `${url}&q=${query}&page=${pageNumber}`
   useEffect(() => {
     setLoading(true)
     setError(false)
@@ -31,7 +29,7 @@ export default function useImageSearch(query, pageNumber) {
         })
         setHasMore(res.data.totalHits > photos.length)
         setLoading(false)
-        console.log(res.data)
+        // console.log(res.data)
       })
       .catch((e) => {
         if (axios.isCancel(e)) return

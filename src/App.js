@@ -47,8 +47,6 @@ function TopHeader() {
 }
 
 export default function CenteredTextAppBar() {
-  // const [photos, setPhotos] = useState([])
-
   const [search, setSearch] = useState("")
   const [pageNumber, setPageNumber] = useState(1)
   const { photos, hasMore, loading, error } = useImageSearch(search, pageNumber)
@@ -64,29 +62,10 @@ export default function CenteredTextAppBar() {
         }
       })
       if (node) observer.current.observe(node)
-      console.log(node)
+      // console.log(node)
     },
     [loading, hasMore]
   )
-
-  // useEffect(async () => {
-  //   const items = await fetchData(search, pageNumber)
-  //   setPhotos((prevItems) => {
-  //     if (!prevItems) return [...prevItems, ...items.hits]
-  //     return [...items.hits]
-  //   })
-  //   // console.log(items)
-  // }, [])
-
-  // useEffect(async () => {
-  //   // setPageNumber(1)
-  //   const items = await fetchData(search, pageNumber)
-  //   // setHasMore(items.totalHits > pageNumber)
-  //   setPhotos((prevItems) => {
-  //     if (!prevItems) return [...prevItems, ...items.hits]
-  //     return [...items.hits]
-  //   })
-  // }, [search, pageNumber])
 
   return (
     <>

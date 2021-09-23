@@ -10,8 +10,7 @@ export default function CountrySelect() {
   // this is for storing previous search strings
   const [queries, setQueries] = useState([])
 
-  let { photos, setPhotos, search, setSearch, pageNumber, setPageNumber } =
-    useContext(TextFieldContext)
+  let { setSearch, setPageNumber } = useContext(TextFieldContext)
 
   function handleChange(e) {
     window.scrollTo(0, 0)
@@ -51,13 +50,6 @@ export default function CountrySelect() {
           />
         )}
       />
-      {/* <TextField
-        id="filled-basic"
-        label="Search for images"
-        variant="filled"
-        sx={TextFieldStyle}
-        onChange={handleChange}
-      /> */}
     </>
   )
 }
