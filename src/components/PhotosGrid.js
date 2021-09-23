@@ -1,22 +1,10 @@
 import React from "react"
 import { useState, useContext } from "react"
-import { PhotosContext, TextFieldContext } from "../App"
-import { makeStyles } from "@mui/styles"
+import { PhotosContext } from "../App"
 import Modal from "@mui/material/Modal"
-import Dialog from "@mui/material/Dialog"
 import ImageList from "@mui/material/ImageList"
 import ImageListItem from "@mui/material/ImageListItem"
 import Box from "@mui/material/Box"
-
-const PhotoStyles = makeStyles({
-  image: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "8px",
-    margin: "8px",
-  },
-})
 
 const modalstyle = {
   position: "absolute",
@@ -35,15 +23,6 @@ const ModalImage = (props) => {
   const { image, open, onClose } = props
 
   return (
-    // <Dialog
-    //   title="Dialog with actions"
-    //   // modal={false}
-    //   open={open}
-    //   onClose={onClose}
-    //   onBackdropClick={onClose}
-    // >
-    //   <img src={image} alt=""></img>
-    // </Dialog>
     <Modal
       open={open}
       onClose={onClose}
@@ -51,7 +30,7 @@ const ModalImage = (props) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={modalstyle}>
-        <img src={image}></img>
+        <img src={image} alt=""></img>
       </Box>
     </Modal>
   )
@@ -66,35 +45,31 @@ const Photo = (props) => {
 
   const { handleOpen } = props
 
-  const items = props.photos.map(
-    (photo, idx) => {
-      if (props.photos.length === idx + 1) {
-        return (
-          <ImageListItem key={photo.id} ref={lastImageElementRef}>
-            <img
-              src={photo.webformatURL}
-              loading="lazy"
-              onClick={() => handleOpen(photo.webformatURL)}
-            />
-          </ImageListItem>
-        )
-      } else {
-        return (
-          <ImageListItem key={photo.id}>
-            <img
-              src={photo.webformatURL}
-              loading="lazy"
-              onClick={() => handleOpen(photo.webformatURL)}
-            />
-          </ImageListItem>
-        )
-      }
+  const items = props.photos.map((photo, idx) => {
+    if (props.photos.length === idx + 1) {
+      return (
+        <ImageListItem key={photo.id} ref={lastImageElementRef}>
+          <img
+            src={photo.webformatURL}
+            loading="lazy"
+            alt={photo.title}
+            onClick={() => handleOpen(photo.webformatURL)}
+          />
+        </ImageListItem>
+      )
+    } else {
+      return (
+        <ImageListItem key={photo.id}>
+          <img
+            src={photo.webformatURL}
+            alt={photo.title}
+            loading="lazy"
+            onClick={() => handleOpen(photo.webformatURL)}
+          />
+        </ImageListItem>
+      )
     }
-    // <div key={photo.id} className={classes.image}>
-    //   <img src={photo.previewURL}></img>
-    //   <ModalImage previewURL={photo.webformatURL} />
-    // </div>
-  )
+  })
   return items
 }
 
@@ -125,16 +100,5 @@ export default function PhotosGrid() {
       </Box>
       <ModalImage image={currentImg} open={open} onClose={handleClose} />
     </>
-    // <Box
-    //   sx={{
-    //     display: "grid",
-    //     columnGap: 1,
-    //     rowGap: 1,
-    //     gridTemplateColumns: "repeat(3, 1fr)",
-    //     width: "100vw",
-    //   }}
-    // >
-    //   <Photo photos={photos} />
-    // </Box>
   )
 }

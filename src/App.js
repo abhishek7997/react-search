@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback } from "react"
+import React, { useState, useRef, useCallback } from "react"
 import { CssBaseline, AppBar, Typography, Toolbar } from "@mui/material"
 import CountrySelect from "./components/SearchBox"
 import PhotosGrid from "./components/PhotosGrid"
-import useImageSearch, { fetchData } from "./utils/GetImages"
+import useImageSearch from "./utils/GetImages"
 
 export const PhotosContext = React.createContext()
 export const TextFieldContext = React.createContext()
@@ -10,7 +10,7 @@ export const PageNumber = React.createContext(1)
 
 const AppBarStyles = {
   appbar: {
-    background: "gray",
+    background: "#2c3e50",
     py: 2,
   },
   toolbar: {
@@ -62,7 +62,6 @@ export default function CenteredTextAppBar() {
         }
       })
       if (node) observer.current.observe(node)
-      // console.log(node)
     },
     [loading, hasMore]
   )
@@ -73,7 +72,6 @@ export default function CenteredTextAppBar() {
         <TextFieldContext.Provider
           value={{
             photos,
-            // setPhotos,
             search,
             setSearch,
             pageNumber,
