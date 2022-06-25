@@ -5,6 +5,9 @@ import Modal from "@mui/material/Modal"
 import ImageList from "@mui/material/ImageList"
 import ImageListItem from "@mui/material/ImageListItem"
 import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import FileDownloadIcon from "@mui/icons-material/FileDownload"
+import { saveAs } from "file-saver"
 
 const modalstyle = {
   position: "absolute",
@@ -16,11 +19,20 @@ const modalstyle = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  display: "flex",
+  flexDirection: "column",
+}
+
+const extraMargin = {
+  marginBottom: "1rem",
 }
 
 // All images are opening when clicking on any one image, must be fixed
 const ModalImage = (props) => {
   const { image, open, onClose } = props
+  const downloadImage = () => {
+    saveAs(image, image.substring(image.lastIndexOf("/") + 1))
+  }
 
   return (
     <Modal
@@ -30,7 +42,14 @@ const ModalImage = (props) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={modalstyle}>
-        <img src={image} alt=""></img>
+        <img src={image} alt="" style={extraMargin}></img>
+        <Button
+          onClick={downloadImage}
+          startIcon={<FileDownloadIcon />}
+          variant="outlined"
+        >
+          Download
+        </Button>
       </Box>
     </Modal>
   )

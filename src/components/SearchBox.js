@@ -8,7 +8,7 @@ import Button from "@mui/material/Button"
 
 const TextFieldStyle = { backgroundColor: "white", width: "32rem" }
 
-export default function CountrySelect() {
+export default function SearchQueries() {
   // this is for storing previous user input search strings
   const [queries, setQueries] = useState([])
   let { setSearch, setPageNumber } = useContext(TextFieldContext)
@@ -18,14 +18,14 @@ export default function CountrySelect() {
     setQueries(data)
   }, [])
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     e.preventDefault()
     window.scrollTo(0, 0)
     setPageNumber(1)
     setSearch(e.target.value)
   }
 
-  function handleKeyDown(e) {
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       setSearch(e.target.value)
       setQueries((prevQueries) => {
@@ -36,7 +36,7 @@ export default function CountrySelect() {
     }
   }
 
-  function clearAll() {
+  const clearAll = () => {
     localStorage.removeItem("queries")
     setQueries([])
   }

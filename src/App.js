@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from "react"
-import { CssBaseline, AppBar, Typography, Toolbar } from "@mui/material"
-import CountrySelect from "./components/SearchBox"
+import { CssBaseline, AppBar, Typography, Toolbar, Link } from "@mui/material"
+import SearchQueries from "./components/SearchBox"
 import PhotosGrid from "./components/PhotosGrid"
 import useImageSearch from "./utils/GetImages"
 
@@ -23,15 +23,35 @@ const AppBarStyles = {
   },
 }
 
-function TopHeader() {
+const TopHeader = () => {
   return (
     <>
       <AppBar position="sticky" sx={AppBarStyles.appbar}>
         <Toolbar sx={AppBarStyles.toolbar}>
-          <Typography variant="h6" sx={AppBarStyles.title}>
-            Search Photos
+          <Typography variant="h5" sx={AppBarStyles.title}>
+            <Link
+              href="https://github.com/abhishek7997/react-search"
+              color="inherit"
+              variant="h5"
+              underline="hover"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Photos Finder
+            </Link>{" "}
+            - by{" "}
+            <Link
+              href="https://github.com/abhishek7997/"
+              color="inherit"
+              variant="h5"
+              underline="hover"
+              target="_blank"
+              rel="noreferrer"
+            >
+              M.Abhishek
+            </Link>
           </Typography>
-          <CountrySelect />
+          <SearchQueries />
         </Toolbar>
       </AppBar>
     </>

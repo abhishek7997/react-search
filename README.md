@@ -7,6 +7,7 @@
 - Saves user queries in localStorage
 - Used Material UI
 - Preview image by clicking on it
+- Download image
 
 # Screenshot
 
