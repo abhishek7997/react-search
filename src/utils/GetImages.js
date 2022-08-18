@@ -20,7 +20,7 @@ export default function useImageSearch(query, pageNumber) {
     axios({
       method: "GET",
       url: url,
-      params: { q: query, page: pageNumber },
+      params: { q: query, page: pageNumber, safesearch: true },
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
       .then((res) => {
